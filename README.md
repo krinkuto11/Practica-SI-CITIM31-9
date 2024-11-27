@@ -1,2 +1,4 @@
 # Práctica-SI-CITIM31-9
-Práctica para la asignatura Sistemas Inteligentes de tercer curso de Ingeniería de Computadores en la ETSISI UPM
+**Asignatura**: Sistemas Inteligentes
+**Curso**: 3º
+**Contenido del repositorio**: código funcional
