@@ -1,8 +1,11 @@
+# Módulo con los métodos relacionados con la extracción de descriptores
+# de formas
+
+#Imports
 import cv2
 from skimage.measure import label, regionprops
-import numpy as np
 
-
+#Función combinada
 def extract_shape_features(image):
     binary_image = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY_INV)[1]
     ar = aspect_ratio(binary_image)
@@ -11,7 +14,7 @@ def extract_shape_features(image):
     euler = euler_number(binary_image)
     feature_vector = [ar, comp] + hu + [euler]
     return feature_vector
-
+#Funciones individuales
 def aspect_ratio(image):
     x, y, w, h = cv2.boundingRect(image)
     return w / h if h != 0 else 0
