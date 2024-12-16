@@ -8,5 +8,5 @@ from skimage import data, exposure, io
 def extraer_histogramas(imagen,orientaciones, pixelspercell,cellsperblock,multichannel):
     image = imagen.grayscale()
     features = hog(image, orientations=orientaciones, pixels_per_cell=(pixelspercell, pixelspercell),
-                              cells_per_block=(cellsperblock, cellsperblock), multichannel=multichannel)
-    
+                              cells_per_block=(cellsperblock, cellsperblock), multichannel=multichannel,feature_vector=True)
+    return features
