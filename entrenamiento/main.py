@@ -6,7 +6,7 @@ from weka.core.classes import Random
 from weka.core.classes import serialization_read, serialization_write
 
 
-def main():
+def training(ficheroentrenamiento):
     # Inicia la JVM para usar Weka
     jvm.start(packages=True)
 

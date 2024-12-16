@@ -1,4 +1,4 @@
-def extraccion(image,opciones):
+def extraccion(image,opciones): #Devuelve ARFF
     print("")
 
 
