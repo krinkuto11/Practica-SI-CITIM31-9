@@ -14,6 +14,7 @@ def extract_shape_features(image):
     euler = euler_number(binary_image)
     feature_vector = [ar, comp] + hu + [euler]
     return feature_vector
+
 #Funciones individuales
 def aspect_ratio(image):
     x, y, w, h = cv2.boundingRect(image)
