@@ -4,7 +4,7 @@ import arff
 
 import histogramasgo
 
-def extraccion(images,opciones,**kwargs): #Devuelve ARFF
+def extraccion(images,opciones,fichero_destino,**kwargs): #Devuelve ARFF
 
     #Caso 1:
     if opciones == "histogramas":
@@ -18,7 +18,7 @@ def extraccion(images,opciones,**kwargs): #Devuelve ARFF
             "data": [(props[e]) for e in range(len(images))],
         }
 
-        with open('hog_features.arff', 'w') as f:
+        with open(fichero_destino, 'w') as f:
             arff.dump(arff_data, f)
 
     elif opciones == "formas":
@@ -30,4 +30,6 @@ def extraccion(images,opciones,**kwargs): #Devuelve ARFF
             "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props))],
             "data": [(props[e]) for e in range(len(images))],
         }
+        with open(fichero_destino, 'w') as f:
+            arff.dump(arff_data, f)
 

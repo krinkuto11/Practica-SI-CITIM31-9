@@ -1,3 +1,4 @@
+from entrenamiento import main
 #Aquí se deberá realizar una demostración de todas las funciones de
 #realizadas en el proyecto.
 
@@ -13,3 +14,5 @@
 #2. Entrenamiento
 #   2.1. Múltiples Iteraciones usando varias parámetros: descriptores, momentos..
 #   2.2. Comparación de evaluaciones
+
+main.main()

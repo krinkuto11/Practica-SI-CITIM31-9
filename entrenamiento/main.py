@@ -1,5 +1,8 @@
+import os
+
+import cv2
 import weka.core.jvm as jvm
-from descriptores import *
+import fnmatch
 from weka.core.converters import Loader, Saver
 from weka.classifiers import Classifier, Evaluation
 from weka.filters import Filter
@@ -7,13 +10,27 @@ from weka.core.classes import Random
 from weka.core.classes import serialization_read, serialization_write
 
 def main():
+    path_raiz = os.getcwd()
+    path_recursos = "Resources/DatosRaw/ccnds"
+    path_dataset = os.path.join(path_raiz, path_recursos)
+    #print(path_dataset)
+
+    #print(range(len(fnmatch.filter(os.listdir(f"{path_dataset}/0"), '*.png'))))
+
+    imagenes = [[(cv2.imread(f"{path_dataset}/{numero}/{numero}_{i}.png"), numero) for i in range(1,len(fnmatch.filter(os.listdir(f"{path_dataset}/{numero}"), '*.png'))+1)] for numero in range(10)]
+
 
     ##Probamos con distintas cosas:
     ##Prueba N1: Solamente Histogramas
+
+    #fichero_destino = "Resources/Datasets/histogramas.arff"
+    #ext.extraccion(fichero_destino)
     ##Prueba N2: Hu + Ratio de Aspecto + Compacidad
     ##Prueba N3: Euler + Ratio de Aspecto + Compacidad
     ##Prueba N4: Euler + Hu
     ##Prueba N5: Todos los descriptores
+
+
 
 def training(ficheroentrenamiento):
     # Inicia la JVM para usar Weka
