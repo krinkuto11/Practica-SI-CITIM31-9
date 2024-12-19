@@ -30,6 +30,17 @@ def main():
     ##Prueba N4: Euler + Hu
     ##Prueba N5: Todos los descriptores
 
+def obtener_imagenes(path_recursos):
+    path_raiz = os.getcwd()
+    #path_recursos = "Resources/DatosRaw/ccnds"
+    path_dataset = os.path.join(path_raiz, path_recursos)
+    # print(path_dataset)
+
+    # print(range(len(fnmatch.filter(os.listdir(f"{path_dataset}/0"), '*.png'))))
+
+    imagenes = [[(cv2.imread(f"{path_dataset}/{numero}/{numero}_{i}.png"), numero) for i in
+                 range(1, len(fnmatch.filter(os.listdir(f"{path_dataset}/{numero}"), '*.png')) + 1)] for numero in
+                range(10)]
 
 
 def training(ficheroentrenamiento):
