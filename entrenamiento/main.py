@@ -1,46 +1,30 @@
-import os
+import arff
 
-import cv2
+from descriptores import extraccion as ext
+import pprint
 import weka.core.jvm as jvm
-import fnmatch
 from weka.core.converters import Loader, Saver
 from weka.classifiers import Classifier, Evaluation
 from weka.filters import Filter
-from weka.core.classes import Random
-from weka.core.classes import serialization_read, serialization_write
+from weka.core.classes import serialization_read, serialization_write, Random
 
 def main():
-    path_raiz = os.getcwd()
-    path_recursos = "Resources/DatosRaw/ccnds"
-    path_dataset = os.path.join(path_raiz, path_recursos)
-    #print(path_dataset)
 
-    #print(range(len(fnmatch.filter(os.listdir(f"{path_dataset}/0"), '*.png'))))
-
-    imagenes = [[(cv2.imread(f"{path_dataset}/{numero}/{numero}_{i}.png"), numero) for i in range(1,len(fnmatch.filter(os.listdir(f"{path_dataset}/{numero}"), '*.png'))+1)] for numero in range(10)]
-
-
+    imagenes = ext.obtener_imagenes("Resources/DatosRaw/ccnds")
+    print(f"Extraídas {len(imagenes)} imágenes.")
+    print("Prueba 1: Histogramas. Opciones -> Orientaciones: 2, Píxeles/Celda: 8, Celdas/Bloque: 2, Multicanal: Sí")
     ##Probamos con distintas cosas:
     ##Prueba N1: Solamente Histogramas
-
-    #fichero_destino = "Resources/Datasets/histogramas.arff"
-    #ext.extraccion(fichero_destino)
+    fichero_destino = "Resources/Datasets/histogramas.arff"
+    ext.extraccion(images=imagenes, opciones="histogramas",fichero_destino=fichero_destino,histoptions=[2,2,2])
+    #fichero = arff.load(fichero_destino)
+    #pprint.pprint(fichero)
     ##Prueba N2: Hu + Ratio de Aspecto + Compacidad
     ##Prueba N3: Euler + Ratio de Aspecto + Compacidad
     ##Prueba N4: Euler + Hu
     ##Prueba N5: Todos los descriptores
 
-def obtener_imagenes(path_recursos):
-    path_raiz = os.getcwd()
-    #path_recursos = "Resources/DatosRaw/ccnds"
-    path_dataset = os.path.join(path_raiz, path_recursos)
-    # print(path_dataset)
 
-    # print(range(len(fnmatch.filter(os.listdir(f"{path_dataset}/0"), '*.png'))))
-
-    imagenes = [[(cv2.imread(f"{path_dataset}/{numero}/{numero}_{i}.png"), numero) for i in
-                 range(1, len(fnmatch.filter(os.listdir(f"{path_dataset}/{numero}"), '*.png')) + 1)] for numero in
-                range(10)]
 
 
 def training(ficheroentrenamiento):
