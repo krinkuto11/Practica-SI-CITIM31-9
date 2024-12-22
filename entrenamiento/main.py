@@ -2,6 +2,7 @@ from datetime import datetime
 
 import arff
 
+import descriptores.formas
 from descriptores import extraccion as ext
 import pprint
 import weka.core.jvm as jvm
@@ -15,14 +16,21 @@ def main():
     imagenes = ext.obtener_imagenes("Resources/DatosRaw/ccnds")
     print(f"Extraídas {len(imagenes)} imágenes.")
     ##Probamos con distintas cosas:
+
     ##Prueba N1: Solamente Histogramas
     print("Prueba 1: Histogramas. Opciones -> Orientaciones: 2, Píxeles/Celda: 2, Celdas/Bloque: 2")
-    fichero_destino = f"Resources/Datasets/histogramas_{datetime.now().strftime('%Y%m%d%H%M%S')}.arff"
+    fichero_destino = f"Resources/Datasets/histogramas_hist_{datetime.now().strftime('%Y%m%d%H%M%S')}.arff"
     ext.extraccion(images=imagenes, opciones="histogramas",fichero_destino=fichero_destino,histoptions=[2,2,2])
     print(f'[Extracción] Generación de Dataset completada: {fichero_destino}')
-    #fichero = arff.load(fichero_destino)
-    #pprint.pprint(fichero)
+
     ##Prueba N2: Hu + Ratio de Aspecto + Compacidad
+    print("Prueba 2: Formas. Opciones -> Momentos Hu, Ratio de Aspecto, Compacidad")
+    fichero_destino2 = f"Resources/Datasets/histogramas_form1_{datetime.now().strftime('%Y%m%d%H%M%S')}.arff"
+    formas = [descriptores.formas.hu_moments, descriptores.formas.aspect_ratio, descriptores.formas.compactness]
+    ext.extraccion(images=imagenes, opciones='formas',fichero_destino=fichero_destino,formas=formas)
+    print(f'[Extracción] Generación de Dataset completada: {fichero_destino2}')
+
+
     ##Prueba N3: Euler + Ratio de Aspecto + Compacidad
     ##Prueba N4: Euler + Hu
     ##Prueba N5: Todos los descriptores

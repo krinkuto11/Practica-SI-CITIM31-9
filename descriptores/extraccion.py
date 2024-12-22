@@ -59,9 +59,9 @@ def extraccion(images, opciones, fichero_destino, **kwargs):  # Devuelve ARFF
 
         arff_data = {
             "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props[0]))] + [("label", "NUMERIC")],
-            "data": [props[e] + [int(images[e][1])] for e in range(len(images))],
-            "description": "Descriptores HOG de una imagen",
-            "relation": "hog_features",
+            "data": [props[e] + [int(images[e][1])] for e in tqdm(range(len(images)),desc='[Extracción] Generando archivo ARFF')],
+            "description": "Descriptores formas de una imagen",
+            "relation": "shape_features",
         }
 
         with open(fichero_destino, 'w') as f:
