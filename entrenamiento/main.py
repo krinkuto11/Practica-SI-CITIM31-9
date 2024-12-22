@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import arff
 
 from descriptores import extraccion as ext
@@ -15,7 +17,7 @@ def main():
     print("Prueba 1: Histogramas. Opciones -> Orientaciones: 2, Píxeles/Celda: 8, Celdas/Bloque: 2, Multicanal: Sí")
     ##Probamos con distintas cosas:
     ##Prueba N1: Solamente Histogramas
-    fichero_destino = "Resources/Datasets/histogramas.arff"
+    fichero_destino = f"Resources/Datasets/histogramas_{datetime.now().strftime('%Y%m%d%H%M%S')}.arff"
     ext.extraccion(images=imagenes, opciones="histogramas",fichero_destino=fichero_destino,histoptions=[2,2,2])
     #fichero = arff.load(fichero_destino)
     #pprint.pprint(fichero)
@@ -44,7 +46,7 @@ def training(ficheroentrenamiento):
     data_normalized = normalize.filter(data)
 
     # Dividir los datos en 70% entrenamiento y 30% prueba
-    train, test = data.train_test_split(70.0, Random(1))
+    train, test = data_normalized.train_test_split(70.0, Random(1))
 
     # Crear y configurar el clasificador
     classifier = Classifier(classname="weka.classifiers.trees.RandomForest")
