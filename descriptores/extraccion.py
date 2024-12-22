@@ -47,15 +47,18 @@ def extraccion(images, opciones, fichero_destino, **kwargs):  # Devuelve ARFF
             arff.dump(arff_data, f)
 
 
+
+
     # Caso 2: Formas
     elif opciones == "formas":
         formas = kwargs["formas"]
 
         # Añadir barra de progreso
         props = [
-            [forma(imagen).flatten() for forma in formas]
+            [forma(imagen[0]) for forma in formas]
             for imagen in tqdm(images, desc="[Extracción] Procesando formas")
         ]
+        print(len(props))
 
         arff_data = {
             "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props[0]))] + [("label", "NUMERIC")],
@@ -64,6 +67,7 @@ def extraccion(images, opciones, fichero_destino, **kwargs):  # Devuelve ARFF
             "relation": "shape_features",
         }
 
-        with open(fichero_destino, 'w') as f:
+        print('[Extracción] Escribiendo archivo ARFF')
+        with open(fichero_destino, 'w+') as f:
             arff.dump(arff_data, f)
 

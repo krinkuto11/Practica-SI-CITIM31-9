@@ -3,6 +3,7 @@
 
 #Imports
 import cv2
+import numpy as np
 from skimage.measure import label, regionprops
 
 #Función combinada
@@ -12,7 +13,7 @@ def extract_shape_features(image):
     comp = compactness(binary_image)
     hu = hu_moments(binary_image)
     euler = euler_number(binary_image)
-    feature_vector = [ar, comp] + hu + [euler]
+    feature_vector = [ar] + [comp] + [hu] + [euler]
     return feature_vector
 
 #Funciones individuales
@@ -32,6 +33,13 @@ def euler_number(image):
     return euler
 
 def hu_moments(image):
+    if len(image.shape) > 2:  # La imagen debe ser en escala de grises o binaria
+        raise ValueError("La imagen debe estar en escala de grises o binaria.")
+    if image.dtype != np.uint8:
+        image = image.astype('uint8')
+    if not np.any(image):  # Verificar que la imagen no esté completamente vacía
+        raise ValueError("La imagen está completamente negra. No se pueden calcular los momentos.")
+
     moments = cv2.moments(image)
     hu = cv2.HuMoments(moments).flatten()
     return hu.tolist()

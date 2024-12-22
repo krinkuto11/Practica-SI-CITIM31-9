@@ -27,7 +27,7 @@ def main():
     print("Prueba 2: Formas. Opciones -> Momentos Hu, Ratio de Aspecto, Compacidad")
     fichero_destino2 = f"Resources/Datasets/histogramas_form1_{datetime.now().strftime('%Y%m%d%H%M%S')}.arff"
     formas = [descriptores.formas.hu_moments, descriptores.formas.aspect_ratio, descriptores.formas.compactness]
-    ext.extraccion(images=imagenes, opciones='formas',fichero_destino=fichero_destino,formas=formas)
+    ext.extraccion(images=imagenes, opciones='formas',fichero_destino=fichero_destino2,formas=formas)
     print(f'[Extracción] Generación de Dataset completada: {fichero_destino2}')
 
 
