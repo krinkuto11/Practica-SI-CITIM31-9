@@ -10,10 +10,11 @@ def obtener_imagenes(path_recursos):
     #path_recursos = "Resources/DatosRaw/ccnds"
     path_dataset = os.path.join(path_raiz, path_recursos)
     imagenes = [
-        (cv2.imread(os.path.join(path_dataset, str(numero), archivo)), numero)
+        (cv2.adaptiveThreshold(cv2.imread(os.path.join(path_dataset, str(numero), archivo),cv2.IMREAD_GRAYSCALE), 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                   cv2.THRESH_BINARY_INV, 11, 2), numero)
         for numero in range(10)
         for archivo in fnmatch.filter(os.listdir(os.path.join(path_dataset, str(numero))), f"{numero}_*.png")
-        if cv2.imread(os.path.join(path_dataset, str(numero), archivo)) is not None
+        if cv2.imread(os.path.join(path_dataset, str(numero), archivo),cv2.IMREAD_GRAYSCALE) is not None
     ]
     return imagenes
 
@@ -38,10 +39,10 @@ def extraccion(images,opciones,fichero_destino,**kwargs): #Devuelve ARFF
         formas = kwargs["formas"]
         props = [[forma(imagen).flatten() for forma in formas] for imagen in images]
         arff_data = {
-            "description": "Descriptores de formas de una imagen",
-            "relation": "shape_features",
-            "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props))],
-            "data": [(props[e]) for e in range(len(images))],
+            "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props[0]))] + [("label", "NUMERIC")],
+            "data": [props[e] + [int(images[e][1])] for e in range(len(images))],
+            "description": "Descriptores HOG de una imagen",
+            "relation": "hog_features",
         }
         with open(fichero_destino, 'w') as f:
             arff.dump(arff_data, f)

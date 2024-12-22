@@ -9,3 +9,7 @@ def mostrar_imagen(imagen):
     plt.axis('off')  # Oculta los ejes
     plt.title(imagen[1], fontsize=12, color='blue')  # Pie de imagen
     plt.show()
+
+
+def procesar_imagen(imagen):
+    print("hello")
