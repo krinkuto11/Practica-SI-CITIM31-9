@@ -11,5 +11,3 @@ def mostrar_imagen(imagen):
     plt.show()
 
 
-def procesar_imagen(imagen):
-    print("hello")

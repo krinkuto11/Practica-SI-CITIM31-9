@@ -1,4 +1,7 @@
+import numpy as np
+import itertools
 from tqdm import tqdm
+from Herramientas import General as gen
 import fnmatch
 import os
 import arff
@@ -54,11 +57,16 @@ def extraccion(images, opciones, fichero_destino, **kwargs):  # Devuelve ARFF
         formas = kwargs["formas"]
 
         # Añadir barra de progreso
-        props = [
-            [forma(imagen[0]) for forma in formas]
-            for imagen in tqdm(images, desc="[Extracción] Procesando formas")
-        ]
-        print(len(props))
+        props = []
+        for imagen in tqdm(images, desc="[Extracción] Procesando formas"):
+            prop_img = []
+            for forma in formas:
+                prop_img.append(forma(imagen[0]))
+            prop_img = list(itertools.chain.from_iterable(prop_img))
+            props.append(prop_img)
+
+
+
 
         arff_data = {
             "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props[0]))] + [("label", "NUMERIC")],
@@ -71,3 +79,12 @@ def extraccion(images, opciones, fichero_destino, **kwargs):  # Devuelve ARFF
         with open(fichero_destino, 'w+') as f:
             arff.dump(arff_data, f)
 
+
+
+def extraccion_universal(images,opciones, fichero_destino):
+
+    props = []
+    for imagen in images:
+        temp = []
+        for opc in opciones:
+            temp.append(opc(imagen[0]))
