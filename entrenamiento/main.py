@@ -14,11 +14,12 @@ def main():
 
     imagenes = ext.obtener_imagenes("Resources/DatosRaw/ccnds")
     print(f"Extraídas {len(imagenes)} imágenes.")
-    print("Prueba 1: Histogramas. Opciones -> Orientaciones: 2, Píxeles/Celda: 8, Celdas/Bloque: 2, Multicanal: Sí")
     ##Probamos con distintas cosas:
     ##Prueba N1: Solamente Histogramas
+    print("Prueba 1: Histogramas. Opciones -> Orientaciones: 2, Píxeles/Celda: 2, Celdas/Bloque: 2")
     fichero_destino = f"Resources/Datasets/histogramas_{datetime.now().strftime('%Y%m%d%H%M%S')}.arff"
     ext.extraccion(images=imagenes, opciones="histogramas",fichero_destino=fichero_destino,histoptions=[2,2,2])
+    print(f'[Extracción] Generación de Dataset completada: {fichero_destino}')
     #fichero = arff.load(fichero_destino)
     #pprint.pprint(fichero)
     ##Prueba N2: Hu + Ratio de Aspecto + Compacidad
@@ -36,6 +37,7 @@ def training(ficheroentrenamiento):
     # Carga de datos desde un archivo ARFF
     loader = Loader(classname="weka.core.converters.ArffLoader")
     data = loader.load_file("ruta_al_archivo.arff")
+    print('[Entrenamiento] Cargado dataset')
 
     # Establecer la última columna como clase objetivo
     data.class_is_last()
