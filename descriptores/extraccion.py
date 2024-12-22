@@ -81,10 +81,3 @@ def extraccion(images, opciones, fichero_destino, **kwargs):  # Devuelve ARFF
 
 
 
-def extraccion_universal(images,opciones, fichero_destino):
-
-    props = []
-    for imagen in images:
-        temp = []
-        for opc in opciones:
-            temp.append(opc(imagen[0]))

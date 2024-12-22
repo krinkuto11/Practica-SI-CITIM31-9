@@ -13,7 +13,7 @@ from weka.filters import Filter
 from weka.core.classes import serialization_read, serialization_write, Random
 
 def main():
-
+    jvm.start(packages=True)
     imagenes = ext.obtener_imagenes("Resources/DatosRaw/ccnds")
     print(f"Extraídas {len(imagenes)} imágenes.")
     ##Probamos con distintas cosas:
@@ -24,7 +24,7 @@ def main():
     ext.extraccion(images=imagenes, opciones="histogramas",fichero_destino=fichero_destino,histoptions=[2,2,2])
     print(f'[Extracción] Generación de Dataset completada: {fichero_destino}')
     print('[Entrenamiento] Comenzando entrenamiento del modelo')
-    #training(fichero_destino)
+    training(fichero_destino)
     ##Prueba N2: Hu + Ratio de Aspecto + Compacidad
     print("Prueba 2: Formas. Opciones -> Momentos Hu, Ratio de Aspecto, Compacidad")
     fichero_destino2 = f"Resources/Datasets/histogramas_form1_{datetime.now().strftime('%Y%m%d%H%M%S')}.arff"
@@ -40,12 +40,12 @@ def main():
     ##Prueba N5: Todos los descriptores
 
 
-    #Entrenamiento con primer fichero
-    training(fichero_destino)
+
+    jvm.stop()
 
 def training(ficheroentrenamiento):
-    # Inicia la JVM para usar Weka
-    jvm.start(packages=True)
+
+
 
     # Carga de datos desde un archivo ARFF
     loader = Loader(classname="weka.core.converters.ArffLoader")
@@ -91,5 +91,4 @@ def training(ficheroentrenamiento):
     #    pred = loaded_classifier.classify_instance(inst)
     #   print(f"Instancia {index + 1}: Clase predicha = {new_data.class_attribute.value(int(pred))}")
 
-    #Finalizar JVM
-    jvm.stop()
+
