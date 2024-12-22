@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 
 import arff
@@ -22,13 +23,16 @@ def main():
     fichero_destino = f"Resources/Datasets/histogramas_hist_{datetime.now().strftime('%Y%m%d%H%M%S')}.arff"
     ext.extraccion(images=imagenes, opciones="histogramas",fichero_destino=fichero_destino,histoptions=[2,2,2])
     print(f'[Extracción] Generación de Dataset completada: {fichero_destino}')
-
+    print('[Entrenamiento] Comenzando entrenamiento del modelo')
+    #training(fichero_destino)
     ##Prueba N2: Hu + Ratio de Aspecto + Compacidad
     print("Prueba 2: Formas. Opciones -> Momentos Hu, Ratio de Aspecto, Compacidad")
     fichero_destino2 = f"Resources/Datasets/histogramas_form1_{datetime.now().strftime('%Y%m%d%H%M%S')}.arff"
     formas = [descriptores.formas.hu_moments, descriptores.formas.aspect_ratio, descriptores.formas.compactness]
     ext.extraccion(images=imagenes, opciones='formas',fichero_destino=fichero_destino2,formas=formas)
     print(f'[Extracción] Generación de Dataset completada: {fichero_destino2}')
+    print('[Entrenamiento] Comenzando entrenamiento del modelo')
+    training(fichero_destino2)
 
 
     ##Prueba N3: Euler + Ratio de Aspecto + Compacidad
@@ -36,7 +40,8 @@ def main():
     ##Prueba N5: Todos los descriptores
 
 
-
+    #Entrenamiento con primer fichero
+    training(fichero_destino)
 
 def training(ficheroentrenamiento):
     # Inicia la JVM para usar Weka
@@ -44,7 +49,7 @@ def training(ficheroentrenamiento):
 
     # Carga de datos desde un archivo ARFF
     loader = Loader(classname="weka.core.converters.ArffLoader")
-    data = loader.load_file("ruta_al_archivo.arff")
+    data = loader.load_file(ficheroentrenamiento)
     print('[Entrenamiento] Cargado dataset')
 
     # Establecer la última columna como clase objetivo
@@ -70,24 +75,21 @@ def training(ficheroentrenamiento):
 
     # Mostrar los resultados
     print(evaluation.summary())  # Resumen de precisión
-    print(evaluation.class_details())  # Detalles por clase
-    print(evaluation.confusion_matrix)  # Matriz de confusión
-
 
     # Guardar el modelo en un archivo
     serialization_write("modelo_identificacion.model", classifier)
 
     # Cargar el modelo
-    loaded_classifier = serialization_read("modelo_identificacion.model")
+    #loaded_classifier = serialization_read("modelo_identificacion.model")
 
     # Cargar nuevos datos para predicción
-    new_data = loader.load_file("nuevos_datos.arff")
-    new_data.class_is_last()
+    #new_data = loader.load_file("nuevos_datos.arff")
+    #new_data.class_is_last()
 
     # Realizar predicciones
-    for index, inst in enumerate(new_data):
-        pred = loaded_classifier.classify_instance(inst)
-        print(f"Instancia {index + 1}: Clase predicha = {new_data.class_attribute.value(int(pred))}")
+    #for index, inst in enumerate(new_data):
+    #    pred = loaded_classifier.classify_instance(inst)
+    #   print(f"Instancia {index + 1}: Clase predicha = {new_data.class_attribute.value(int(pred))}")
 
     #Finalizar JVM
     jvm.stop()
