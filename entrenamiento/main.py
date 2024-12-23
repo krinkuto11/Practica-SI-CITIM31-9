@@ -1,11 +1,7 @@
 import os
 from datetime import datetime
-
-import arff
-
 import descriptores.formas
 from descriptores import extraccion as ext
-import pprint
 import weka.core.jvm as jvm
 from weka.core.converters import Loader, Saver
 from weka.classifiers import Classifier, Evaluation
