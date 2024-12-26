@@ -8,7 +8,7 @@ def ocr(image,modelo):
     loader = Loader(classname="weka.core.converters.ArffLoader")
     loaded_classifier = serialization_read(modelo)
 
-    new_data = loader.load_file("nuevos_datos.arff")
+    new_data = loader.load_file(image)
     new_data.class_is_last()
 
     # Realizar predicciones

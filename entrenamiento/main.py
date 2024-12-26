@@ -67,7 +67,7 @@ def training(dataset, fichsalida,clasificador="weka.classifiers.trees.RandomFore
     evaluation = Evaluation(train)
     evaluation.test_model(classifier, test)
 
-    r
+
     # Mostrar los resultados
     print(evaluation.summary())
 
