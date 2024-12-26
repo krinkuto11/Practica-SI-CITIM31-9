@@ -1,7 +1,5 @@
-import numpy as np
 import itertools
 from tqdm import tqdm
-from Herramientas import General as gen
 import fnmatch
 import os
 import arff
@@ -10,7 +8,6 @@ import descriptores.histogramasgo as hist
 
 def obtener_imagenes(path_recursos):
     path_raiz = os.getcwd()
-    #path_recursos = "Resources/DatosRaw/ccnds"
     path_dataset = os.path.join(path_raiz, path_recursos)
     print(f'[Extracción] Obteniendo imágenes del directorio {path_raiz}')
     imagenes = [

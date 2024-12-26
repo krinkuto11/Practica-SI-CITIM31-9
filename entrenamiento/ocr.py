@@ -1,6 +1,5 @@
 from weka.core.classes import serialization_read
 from weka.core.converters import Loader, Saver
-from descriptores import *
 
 
 def ocr(image,modelo):

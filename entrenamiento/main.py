@@ -1,12 +1,12 @@
-import os
 from datetime import datetime
+import weka.core.jvm as jvm
+from weka.classifiers import Classifier, Evaluation
+from weka.core.classes import serialization_write, Random
+from weka.core.converters import Loader
+from weka.filters import Filter
 import descriptores.formas
 from descriptores import extraccion as ext
-import weka.core.jvm as jvm
-from weka.core.converters import Loader, Saver
-from weka.classifiers import Classifier, Evaluation
-from weka.filters import Filter
-from weka.core.classes import serialization_read, serialization_write, Random
+
 
 def main():
     jvm.start(packages=True)
