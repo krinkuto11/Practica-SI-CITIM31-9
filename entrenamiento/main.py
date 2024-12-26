@@ -39,13 +39,11 @@ def main():
 
     jvm.stop()
 
-def training(ficheroentrenamiento):
-
-
-
+def training(dataset, fichsalida,clasificador="weka.classifiers.trees.RandomForest"):
+    resultados = [dataset, fichsalida]
     # Carga de datos desde un archivo ARFF
     loader = Loader(classname="weka.core.converters.ArffLoader")
-    data = loader.load_file(ficheroentrenamiento)
+    data = loader.load_file(dataset)
     print('[Entrenamiento] Cargado dataset')
 
     # Establecer la última columna como clase objetivo
@@ -60,7 +58,7 @@ def training(ficheroentrenamiento):
     train, test = data_normalized.train_test_split(70.0, Random(1))
 
     # Crear y configurar el clasificador
-    classifier = Classifier(classname="weka.classifiers.trees.RandomForest")
+    classifier = Classifier(classname=clasificador)
 
     # Entrenar el modelo con los datos de entrenamiento
     classifier.build_classifier(train)
@@ -69,22 +67,15 @@ def training(ficheroentrenamiento):
     evaluation = Evaluation(train)
     evaluation.test_model(classifier, test)
 
+    r
     # Mostrar los resultados
-    print(evaluation.summary())  # Resumen de precisión
+    print(evaluation.summary())
+
+    resultados.append(evaluation.correlation_coefficient)
 
     # Guardar el modelo en un archivo
-    serialization_write("modelo_identificacion.model", classifier)
+    serialization_write(fichsalida, classifier)
 
-    # Cargar el modelo
-    #loaded_classifier = serialization_read("modelo_identificacion.model")
-
-    # Cargar nuevos datos para predicción
-    #new_data = loader.load_file("nuevos_datos.arff")
-    #new_data.class_is_last()
-
-    # Realizar predicciones
-    #for index, inst in enumerate(new_data):
-    #    pred = loaded_classifier.classify_instance(inst)
-    #   print(f"Instancia {index + 1}: Clase predicha = {new_data.class_attribute.value(int(pred))}")
+    return resultados
 
 
