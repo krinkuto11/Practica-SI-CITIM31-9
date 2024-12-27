@@ -1,43 +1,7 @@
-from datetime import datetime
-import weka.core.jvm as jvm
 from weka.classifiers import Classifier, Evaluation
 from weka.core.classes import serialization_write, Random
 from weka.core.converters import Loader
 from weka.filters import Filter
-import descriptores.formas
-from descriptores import extraccion as ext
-
-
-def main():
-    jvm.start(packages=True)
-    imagenes = ext.obtener_imagenes("Resources/DatosRaw/ccnds2")
-    print(f"Extraídas {len(imagenes)} imágenes.")
-    ##Probamos con distintas cosas:
-
-    ##Prueba N1: Solamente Histogramas
-    print("Prueba 1: Histogramas. Opciones -> Orientaciones: 2, Píxeles/Celda: 2, Celdas/Bloque: 2")
-    fichero_destino = f"Resources/Datasets/histogramas_hist_{datetime.now().strftime('%Y%m%d%H%M%S')}.arff"
-    ext.extraccion(images=imagenes, opciones="histogramas",fichero_destino=fichero_destino,histoptions=[2,2,2])
-    print(f'[Extracción] Generación de Dataset completada: {fichero_destino}')
-    print('[Entrenamiento] Comenzando entrenamiento del modelo')
-    training(fichero_destino,"Resources/Modelos/1.model")
-    ##Prueba N2: Hu + Ratio de Aspecto + Compacidad
-    print("Prueba 2: Formas. Opciones -> Momentos Hu, Ratio de Aspecto, Compacidad")
-    fichero_destino2 = f"Resources/Datasets/histogramas_form1_{datetime.now().strftime('%Y%m%d%H%M%S')}.arff"
-    formas = [descriptores.formas.hu_moments, descriptores.formas.aspect_ratio, descriptores.formas.compactness]
-    ext.extraccion(images=imagenes, opciones='formas',fichero_destino=fichero_destino2,formas=formas)
-    print(f'[Extracción] Generación de Dataset completada: {fichero_destino2}')
-    print('[Entrenamiento] Comenzando entrenamiento del modelo')
-    training(fichero_destino2,"Resources/Modelos/2.model")
-
-
-    ##Prueba N3: Euler + Ratio de Aspecto + Compacidad
-    ##Prueba N4: Euler + Hu
-    ##Prueba N5: Todos los descriptores
-
-
-
-    jvm.stop()
 
 def training(dataset, fichsalida,clasificador="weka.classifiers.trees.RandomForest"):
     resultados = [dataset, fichsalida]
