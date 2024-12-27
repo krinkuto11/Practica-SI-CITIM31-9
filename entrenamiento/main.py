@@ -10,7 +10,7 @@ from descriptores import extraccion as ext
 
 def main():
     jvm.start(packages=True)
-    imagenes = ext.obtener_imagenes("Resources/DatosRaw/ccnds")
+    imagenes = ext.obtener_imagenes("Resources/DatosRaw/ccnds2")
     print(f"Extraídas {len(imagenes)} imágenes.")
     ##Probamos con distintas cosas:
 
@@ -20,7 +20,7 @@ def main():
     ext.extraccion(images=imagenes, opciones="histogramas",fichero_destino=fichero_destino,histoptions=[2,2,2])
     print(f'[Extracción] Generación de Dataset completada: {fichero_destino}')
     print('[Entrenamiento] Comenzando entrenamiento del modelo')
-    training(fichero_destino)
+    training(fichero_destino,"Resources/Modelos/1.model")
     ##Prueba N2: Hu + Ratio de Aspecto + Compacidad
     print("Prueba 2: Formas. Opciones -> Momentos Hu, Ratio de Aspecto, Compacidad")
     fichero_destino2 = f"Resources/Datasets/histogramas_form1_{datetime.now().strftime('%Y%m%d%H%M%S')}.arff"
@@ -28,7 +28,7 @@ def main():
     ext.extraccion(images=imagenes, opciones='formas',fichero_destino=fichero_destino2,formas=formas)
     print(f'[Extracción] Generación de Dataset completada: {fichero_destino2}')
     print('[Entrenamiento] Comenzando entrenamiento del modelo')
-    training(fichero_destino2)
+    training(fichero_destino2,"Resources/Modelos/2.model")
 
 
     ##Prueba N3: Euler + Ratio de Aspecto + Compacidad
