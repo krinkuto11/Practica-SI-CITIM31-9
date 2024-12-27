@@ -11,42 +11,44 @@ from entrenamiento.main import training
 #Sección segmentación
 
 
-#Sección de entrenamiento
+########## Sección de entrenamiento ##########
+##Iniciar la máquina virtual de WEKA
 jvm.start(packages=True)
+##Extraer imágenes y sus etiquetas de la carpeta especificada
 images = ext.obtener_imagenes("Resources/DatosRaw/ccnds2")
+##Especificar opciones para la generación del dataset
 opciones = [("histogramas",[8,8,2]),("histogramas",[9,8,2]),("histogramas",[12,8,2]),("histogramas",[12,16,2]),("histogramas",[16,8,2]),("histogramas",[16,16,2]),('formas', [formas.hu_moments]),
             ('formas', [formas.aspect_ratio]),('formas', [formas.compactness]),('formas', [formas.euler_number]),('formas', [formas.hu_moments, formas.aspect_ratio]),('formas', [formas.hu_moments, formas.compactness]),
             ('formas', [formas.hu_moments, formas.euler_number]),('formas', [formas.aspect_ratio, formas.compactness]),('formas', [formas.aspect_ratio, formas.euler_number]),('formas', [formas.compactness, formas.euler_number]),
             ('formas', [formas.hu_moments, formas.aspect_ratio, formas.compactness]),('formas', [formas.hu_moments, formas.aspect_ratio, formas.euler_number]),('formas', [formas.hu_moments, formas.compactness, formas.euler_number]),
             ('formas', [formas.aspect_ratio, formas.compactness, formas.euler_number]),('formas', [formas.hu_moments, formas.aspect_ratio, formas.compactness, formas.euler_number])
 ]
-stats = ext.extraccion_batch(images,opciones)
+##Generación del dataset
+data = ext.extraccion_batch(images,opciones)
 contador = 0
-correlations = []
-for stat in stats:
+output = []
+for file in data:
     fichsalida = f"Resources/Modelos/modelo{contador}.model"
-    correlations.append(training(stat[2],fichsalida))
+    output.append(training(file[2],fichsalida))
     contador += 1
 
+##Generación de la tabla con Pandas
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 0)
+
 tabla = pd.DataFrame({
-    "Tipo": [e[0] for e in stats],
-    "Opciones": [i[1] for i in stats],
-    "Dataset producido": [o[0] for o in correlations],
-    "Modelo producido": [r[1] for r in correlations],
-    "Coeficiente de correlación": [u[2] for u in correlations],
+    "Tipo": [e[0] for e in data],
+    "Opciones": [i[1] for i in data],
+    "Dataset producido": [o[0] for o in output],
+    "Modelo producido": [r[1] for r in output],
+    "Coeficiente de correlación": [u[2] for u in output],
 })
 
-tabla_ordenada = tabla.sort_values(by="Coeficiente de correlación", ascending=True)
+tabla_ordenada = tabla.sort_values(by="Coeficiente de correlación", ascending=False)
 
 print(tabla_ordenada)
+
+##Paramos la máquina virtual de WEKA
 jvm.stop()
-
-#1. Cargar Dataset
-#   Estructura del dataset: lista->[path,número correspondiente a la imagen]
-#   1.1. Conversión a archivo ARFF -> Función: Descriptores/extraccion: extraccion(imagen, opciones)
-
-
 
