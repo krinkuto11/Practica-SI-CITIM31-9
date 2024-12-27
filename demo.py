@@ -1,3 +1,4 @@
+from tqdm import tqdm
 from descriptores import formas
 from weka.core import jvm
 from descriptores import extraccion as ext
@@ -27,7 +28,7 @@ opciones = [("histogramas",[8,8,2]),("histogramas",[9,8,2]),("histogramas",[12,8
 data = ext.extraccion_batch(images,opciones)
 contador = 0
 output = []
-for file in data:
+for file in tqdm(data,desc="[Entrenamiento] Generando los modelos"):
     fichsalida = f"Resources/Modelos/modelo{contador}.model"
     output.append(training(file[2],fichsalida))
     contador += 1
@@ -48,6 +49,8 @@ tabla = pd.DataFrame({
 tabla_ordenada = tabla.sort_values(by="Coeficiente de correlación", ascending=False)
 
 print(tabla_ordenada)
+
+print(f"El modelo más apto para el uso del OCR es: {tabla_ordenada['Modelo producido'].max()}")
 
 ##Paramos la máquina virtual de WEKA
 jvm.stop()

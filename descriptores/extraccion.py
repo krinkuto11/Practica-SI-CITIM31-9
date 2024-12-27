@@ -33,7 +33,6 @@ def extraccion_batch(imagenes,opciones):
         else:
             resultado_local.append([h.__name__ for h in opc[1]])
             extraccion(imagenes, opc[0], fich_dest, formas=opc[1])
-
         resultado_local.append(fich_dest)
         resultado_total.append(resultado_local)
     return resultado_total

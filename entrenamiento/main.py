@@ -8,7 +8,7 @@ def training(dataset, fichsalida,clasificador="weka.classifiers.trees.RandomFore
     # Carga de datos desde un archivo ARFF
     loader = Loader(classname="weka.core.converters.ArffLoader")
     data = loader.load_file(dataset)
-    print(f'[Entrenamiento] Cargado dataset: {dataset}')
+    #print(f'[Entrenamiento] Cargado dataset: {dataset}')
 
     # Establecer la última columna como clase objetivo
     data.class_is_last()
@@ -39,7 +39,7 @@ def training(dataset, fichsalida,clasificador="weka.classifiers.trees.RandomFore
 
     # Guardar el modelo en un archivo
     serialization_write(fichsalida, classifier)
-    print(f"[Entrenamiento] Guardado modelo en: {fichsalida}")
+    #print(f"[Entrenamiento] Guardado modelo en: {fichsalida}")
     return resultados
 
 
