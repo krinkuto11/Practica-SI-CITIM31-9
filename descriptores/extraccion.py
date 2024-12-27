@@ -23,17 +23,17 @@ def obtener_imagenes(path_recursos):
     ]
     return imagenes
 
-def extraccion_batch(imagenes,opciones,debug_level=0):
+def extraccion_batch(images, opciones, debug_level=0):
     resultado_total = []
     for opc in tqdm(opciones,desc="[Extraccion] Generando datasets por cada opción"):
         fich_dest = f"Resources/Datasets/histogramas_form1_{datetime.now().strftime('%Y%m%d%H%M%S')}.arff"
         resultado_local = [opc[0]]
         if opc[0] == "histogramas":
             resultado_local.append(opc[1])
-            extraccion(imagenes, opc[0], fich_dest, histoptions=opc[1],debug_level=debug_level)
+            extraccion(images, opc[0], fich_dest, histoptions=opc[1], debug_level=debug_level)
         else:
             resultado_local.append([h.__name__ for h in opc[1]])
-            extraccion(imagenes, opc[0], fich_dest, formas=opc[1],debug_level=debug_level)
+            extraccion(images, opc[0], fich_dest, formas=opc[1], debug_level=debug_level)
         resultado_local.append(fich_dest)
         resultado_total.append(resultado_local)
     return resultado_total
