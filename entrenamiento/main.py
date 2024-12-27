@@ -69,7 +69,7 @@ def training(dataset, fichsalida,clasificador="weka.classifiers.trees.RandomFore
 
 
     # Mostrar los resultados
-    print(evaluation.summary())
+    #print(evaluation.summary())
 
     resultados.append(evaluation.correlation_coefficient)
 

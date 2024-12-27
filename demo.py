@@ -1,7 +1,5 @@
-from datetime import datetime
-
+from descriptores import formas
 from weka.core import jvm
-
 from descriptores import extraccion as ext
 import pandas as pd
 from entrenamiento.main import training
@@ -16,7 +14,12 @@ from entrenamiento.main import training
 #Sección de entrenamiento
 jvm.start(packages=True)
 images = ext.obtener_imagenes("Resources/DatosRaw/ccnds2")
-opciones = [("histogramas",[8,8,2]),("histogramas",[9,8,2]),("histogramas",[12,8,2]),("histogramas",[12,16,2]),("histogramas",[16,8,2]),("histogramas",[16,16,2])]
+opciones = [("histogramas",[8,8,2]),("histogramas",[9,8,2]),("histogramas",[12,8,2]),("histogramas",[12,16,2]),("histogramas",[16,8,2]),("histogramas",[16,16,2]),('formas', [formas.hu_moments]),
+            ('formas', [formas.aspect_ratio]),('formas', [formas.compactness]),('formas', [formas.euler_number]),('formas', [formas.hu_moments, formas.aspect_ratio]),('formas', [formas.hu_moments, formas.compactness]),
+            ('formas', [formas.hu_moments, formas.euler_number]),('formas', [formas.aspect_ratio, formas.compactness]),('formas', [formas.aspect_ratio, formas.euler_number]),('formas', [formas.compactness, formas.euler_number]),
+            ('formas', [formas.hu_moments, formas.aspect_ratio, formas.compactness]),('formas', [formas.hu_moments, formas.aspect_ratio, formas.euler_number]),('formas', [formas.hu_moments, formas.compactness, formas.euler_number]),
+            ('formas', [formas.aspect_ratio, formas.compactness, formas.euler_number]),('formas', [formas.hu_moments, formas.aspect_ratio, formas.compactness, formas.euler_number])
+]
 stats = ext.extraccion_batch(images,opciones)
 contador = 0
 correlations = []
@@ -38,7 +41,7 @@ tabla = pd.DataFrame({
 
 tabla_ordenada = tabla.sort_values(by="Coeficiente de correlación", ascending=True)
 
-print(tabla)
+print(tabla_ordenada)
 jvm.stop()
 
 #1. Cargar Dataset
