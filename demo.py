@@ -25,12 +25,14 @@ opciones = [("histogramas",[8,8,2]),("histogramas",[9,8,2]),("histogramas",[12,8
             ('formas', [formas.aspect_ratio, formas.compactness, formas.euler_number]),('formas', [formas.hu_moments, formas.aspect_ratio, formas.compactness, formas.euler_number])
 ]
 ##Generación del dataset
-data = ext.extraccion_batch(images,opciones)
+##Ajustamos los outputs del terminal según el nivel de debug 0-2
+debug_level = 0
+data = ext.extraccion_batch(images,opciones,debug_level=debug_level)
 contador = 0
 output = []
 for file in tqdm(data,desc="[Entrenamiento] Generando los modelos"):
     fichsalida = f"Resources/Modelos/modelo{contador}.model"
-    output.append(training(file[2],fichsalida))
+    output.append(training(file[2],fichsalida,debug_level=debug_level))
     contador += 1
 
 ##Generación de la tabla con Pandas

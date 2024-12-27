@@ -7,6 +7,7 @@ import os
 import arff
 import cv2
 import descriptores.histogramasgo as hist
+from Herramientas.General import tqdm_condicional
 
 
 def obtener_imagenes(path_recursos):
@@ -22,22 +23,22 @@ def obtener_imagenes(path_recursos):
     ]
     return imagenes
 
-def extraccion_batch(imagenes,opciones):
+def extraccion_batch(imagenes,opciones,debug_level=0):
     resultado_total = []
-    for opc in opciones:
+    for opc in tqdm(opciones,desc="[Extraccion] Generando datasets por cada opción"):
         fich_dest = f"Resources/Datasets/histogramas_form1_{datetime.now().strftime('%Y%m%d%H%M%S')}.arff"
         resultado_local = [opc[0]]
         if opc[0] == "histogramas":
             resultado_local.append(opc[1])
-            extraccion(imagenes, opc[0], fich_dest, histoptions=opc[1])
+            extraccion(imagenes, opc[0], fich_dest, histoptions=opc[1],debug_level=debug_level)
         else:
             resultado_local.append([h.__name__ for h in opc[1]])
-            extraccion(imagenes, opc[0], fich_dest, formas=opc[1])
+            extraccion(imagenes, opc[0], fich_dest, formas=opc[1],debug_level=debug_level)
         resultado_local.append(fich_dest)
         resultado_total.append(resultado_local)
     return resultado_total
 
-def extraccion(images, opciones, fichero_destino, **kwargs):  # Devuelve ARFF
+def extraccion(images, opciones, fichero_destino,debug_level=0, **kwargs):  # Devuelve ARFF
     # Caso 1: Histogramas
     if opciones == "histogramas":
         histoptions = kwargs["histoptions"]
@@ -45,17 +46,17 @@ def extraccion(images, opciones, fichero_destino, **kwargs):  # Devuelve ARFF
         # Añadir barra de progreso
         props = [
             hist.extraer_histogramas(images[e][0], histoptions[0], histoptions[1], histoptions[2])
-            for e in tqdm(range(len(images)), desc="[Extracción] Extrayendo histogramas")
+            for e in tqdm_condicional(range(len(images)), desc="[Extracción] Extrayendo histogramas",debug_level=debug_level)
         ]
 
         arff_data = {
             "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props[0]))] + [("label", "NUMERIC")],
-            "data": [props[e] + [int(images[e][1])] for e in tqdm(range(len(images)),desc='[Extracción] Generando archivo ARFF')],
+            "data": [props[e] + [int(images[e][1])] for e in tqdm_condicional(range(len(images)),desc='[Extracción] Generando archivo ARFF',debug_level=debug_level)],
             "description": "Descriptores HOG de una imagen",
             "relation": "hog_features",
         }
 
-        print('[Extracción] Escribiendo archivo ARFF')
+        if debug_level>0:print('[Extracción] Escribiendo archivo ARFF')
         with open(fichero_destino, 'w+') as f:
             arff.dump(arff_data, f)
 
@@ -68,7 +69,7 @@ def extraccion(images, opciones, fichero_destino, **kwargs):  # Devuelve ARFF
 
         # Añadir barra de progreso
         props = []
-        for imagen in tqdm(images, desc="[Extracción] Procesando formas"):
+        for imagen in tqdm_condicional(images, desc="[Extracción] Procesando formas",debug_level=debug_level):
             prop_img = []
             for forma in formas:
                 prop_img.append(forma(imagen[0]))
@@ -80,12 +81,12 @@ def extraccion(images, opciones, fichero_destino, **kwargs):  # Devuelve ARFF
 
         arff_data = {
             "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props[0]))] + [("label", "NUMERIC")],
-            "data": [props[e] + [int(images[e][1])] for e in tqdm(range(len(images)),desc='[Extracción] Generando archivo ARFF')],
+            "data": [props[e] + [int(images[e][1])] for e in tqdm_condicional(range(len(images)),desc='[Extracción] Generando archivo ARFF',debug_level=debug_level)],
             "description": "Descriptores formas de una imagen",
             "relation": "shape_features",
         }
 
-        print('[Extracción] Escribiendo archivo ARFF')
+        if debug_level>0:print('[Extracción] Escribiendo archivo ARFF')
         with open(fichero_destino, 'w+') as f:
             arff.dump(arff_data, f)
 
