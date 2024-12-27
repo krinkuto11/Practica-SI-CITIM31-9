@@ -52,6 +52,7 @@ tabla_ordenada = tabla.sort_values(by="Coeficiente de correlación", ascending=F
 
 print(tabla_ordenada)
 
+modelo_optimo = tabla_ordenada[0]["Modelo producido"]
 print(f"El modelo más apto para el uso del OCR es: {tabla_ordenada['Modelo producido'].max()}")
 
 ##Paramos la máquina virtual de WEKA

@@ -1,0 +1,8 @@
+tqdm~=4.67.1
+opencv-python~=4.10.0.84
+numpy~=2.2.1
+scikit-image~=0.25.0
+matplotlib~=3.10.0
+pandas~=2.2.3
+liac-arff~=2.5.0
+python-weka-wrapper3~=0.3.2
