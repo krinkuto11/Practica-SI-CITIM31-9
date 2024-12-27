@@ -6,15 +6,6 @@ import cv2
 import numpy as np
 from skimage.measure import label, regionprops
 
-#Función combinada
-def extract_shape_features(image):
-    binary_image = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY_INV)[1]
-    ar = aspect_ratio(binary_image)
-    comp = compactness(binary_image)
-    hu = hu_moments(binary_image)
-    euler = euler_number(binary_image)
-    feature_vector = [ar] + [comp] + [hu] + [euler]
-    return feature_vector
 
 #Funciones individuales
 def aspect_ratio(image):
