@@ -4,7 +4,7 @@
 **Contenido del repositorio**: código funcional\
 **Documentación disponible en**: https://docs.eguzkilore.eu
 
-**Como utilizar/preparar entorno de desarrollo**\
+**Como utilizar/preparar entorno de desarrollo**
 
 1. Obtener los contenidos del repositorio:
 ```
