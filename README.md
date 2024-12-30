@@ -15,3 +15,6 @@ cd Practica-SI-CITIM31-9
 ```
 pip install -r requirements.txt
 ```
+3. Descargar el dataset "ccnds2.zip" desde la pestaña [releases](https://github.com/krinkuto11/Practica-SI-CITIM31-9/releases/tag/Dataset)
+4. Crear una carpeta llamada ```Resources``` en la raíz del proyecto
+5. Extraer el .zip en la carpeta
