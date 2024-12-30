@@ -4,7 +4,7 @@
 **Contenido del repositorio**: código funcional\
 **Documentación disponible en**: https://docs.eguzkilore.eu
 
-**Como utilizar/preparar entorno de desarrollo**
+**Como utilizar/preparar entorno de desarrollo**\
 Obtener los contenidos del repositorio:
 ```
 git clone https://github.com/krinkuto11/Practica-SI-CITIM31-9.git
