@@ -4,7 +4,13 @@
 **Contenido del repositorio**: código funcional\
 **Documentación disponible en**: https://docs.eguzkilore.eu
 
+**Como utilizar/preparar entorno de desarrollo**
+Obtener los contenidos del repositorio:
+```
+https://github.com/krinkuto11/Practica-SI-CITIM31-9.git
+cd Practica-SI-CITIM31-9
+```
 Instalar las librerías necesarias:
 ```
-pip install tqdm opencv-python numpy scikit-image matplotlib pandas liac-arff python-weka-wrapper3
+pip install -r requirements.txt
 ```
