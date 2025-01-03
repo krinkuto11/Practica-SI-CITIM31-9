@@ -38,7 +38,9 @@ def extraccion_batch(images, opciones, debug_level=0):
         resultado_total.append(resultado_local)
     return resultado_total
 
-def extraccion(images, opciones, fichero_destino,debug_level=0, **kwargs):  # Devuelve ARFF
+def extraccion(images, opciones, fichero_destino,debug_level=0, **kwargs):
+    label_range = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35']
+    # Devuelve ARFF
     # Caso 1: Histogramas
     if opciones == "histogramas":
         histoptions = kwargs["histoptions"]
@@ -50,7 +52,7 @@ def extraccion(images, opciones, fichero_destino,debug_level=0, **kwargs):  # De
         ]
 
         arff_data = {
-            "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props[0]))] + [("label", "NUMERIC")],
+            "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props[0]))] + [("label", label_range)],
             "data": [props[e] + [int(images[e][1])] for e in tqdm_condicional(range(len(images)),desc='[Extracción] Generando archivo ARFF',debug_level=debug_level)],
             "description": "Descriptores HOG de una imagen",
             "relation": "hog_features",
@@ -80,7 +82,7 @@ def extraccion(images, opciones, fichero_destino,debug_level=0, **kwargs):  # De
 
 
         arff_data = {
-            "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props[0]))] + [("label", "NUMERIC")],
+            "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props[0]))] + [("label", label_range)],
             "data": [props[e] + [int(images[e][1])] for e in tqdm_condicional(range(len(images)),desc='[Extracción] Generando archivo ARFF',debug_level=debug_level)],
             "description": "Descriptores formas de una imagen",
             "relation": "shape_features",

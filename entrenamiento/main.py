@@ -4,7 +4,7 @@ from weka.core.converters import Loader
 from weka.filters import Filter
 
 def training(dataset, fichsalida,clasificador="weka.classifiers.trees.RandomForest",debug_level=0):
-    resultados = [dataset, fichsalida]
+    resultados = [clasificador.split('.')[-1],dataset, fichsalida]
     # Carga de datos desde un archivo ARFF
     loader = Loader(classname="weka.core.converters.ArffLoader")
     data = loader.load_file(dataset)
@@ -35,7 +35,7 @@ def training(dataset, fichsalida,clasificador="weka.classifiers.trees.RandomFore
     # Mostrar los resultados
     if debug_level==2:print(evaluation.summary())
 
-    resultados.append(evaluation.correlation_coefficient)
+    resultados.append(evaluation.percent_correct)
 
     # Guardar el modelo en un archivo
     serialization_write(fichsalida, classifier)
