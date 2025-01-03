@@ -2,7 +2,7 @@
 **Asignatura**: Sistemas Inteligentes\
 **Curso**: 3º\
 **Contenido del repositorio**: código funcional\
-**Documentación disponible en**: [https://docs.eguzkilore.eu](https://si-citim31-9.github.io/Practica-SI-CITIM31-9-docs/)
+**Documentación disponible en**: [https://si-citim31-9.github.io/Practica-SI-CITIM31-9-docs/](https://si-citim31-9.github.io/Practica-SI-CITIM31-9-docs)
 
 **Como utilizar/preparar entorno de desarrollo**
 
