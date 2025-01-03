@@ -2,7 +2,7 @@
 **Asignatura**: Sistemas Inteligentes\
 **Curso**: 3º\
 **Contenido del repositorio**: código funcional\
-**Documentación disponible en**: https://docs.eguzkilore.eu
+**Documentación disponible en**: [https://docs.eguzkilore.eu](https://si-citim31-9.github.io/Practica-SI-CITIM31-9-docs/)
 
 **Como utilizar/preparar entorno de desarrollo**
 
@@ -15,6 +15,6 @@ cd Practica-SI-CITIM31-9
 ```
 pip install -r requirements.txt
 ```
-3. Descargar el dataset "ccnds2.zip" desde la pestaña [releases](https://github.com/krinkuto11/Practica-SI-CITIM31-9/releases/tag/Dataset)
+3. Descargar el dataset "ccnds2.zip" desde la pestaña [releases](https://github.com/si-citim31-9/Practica-SI-CITIM31-9/releases/tag/Dataset)
 4. Crear una carpeta llamada ```Resources``` en la raíz del proyecto
 5. Extraer el .zip en la carpeta
