@@ -4,7 +4,17 @@
 **Contenido del repositorio**: código funcional\
 **Documentación disponible en**: https://docs.eguzkilore.eu
 
-Instalar las librerías necesarias:
+**Como utilizar/preparar entorno de desarrollo**
+
+1. Obtener los contenidos del repositorio:
 ```
-pip install tqdm opencv-python numpy scikit-image matplotlib pandas liac-arff python-weka-wrapper3
+git clone https://github.com/krinkuto11/Practica-SI-CITIM31-9.git
+cd Practica-SI-CITIM31-9
 ```
+2. Instalar las librerías necesarias:
+```
+pip install -r requirements.txt
+```
+3. Descargar el dataset "ccnds2.zip" desde la pestaña [releases](https://github.com/krinkuto11/Practica-SI-CITIM31-9/releases/tag/Dataset)
+4. Crear una carpeta llamada ```Resources``` en la raíz del proyecto
+5. Extraer el .zip en la carpeta
