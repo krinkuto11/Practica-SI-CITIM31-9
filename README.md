@@ -8,7 +8,7 @@
 
 1. Obtener los contenidos del repositorio:
 ```
-git clone https://github.com/krinkuto11/Practica-SI-CITIM31-9.git
+git clone https://github.com/si-citim31-9/Practica-SI-CITIM31-9.git
 cd Practica-SI-CITIM31-9
 ```
 2. Instalar las librerías necesarias:
