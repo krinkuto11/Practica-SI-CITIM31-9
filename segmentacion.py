@@ -162,7 +162,7 @@ def guardar_contornos_segmentados(img_transformada, folder_path):
     cv2.destroyAllWindows()
 
 #Elimina el contenido de las carpetas IMG 1, IMG 2,... y las vuelve a crear vacías
-def clear_segmented_folders(number_of_images, base_path="caracteres_segmentados"):
+def clear_segmented_folders(number_of_images, base_path="Resources/Segmentación/Output"):
     if not os.path.exists(base_path):
         os.makedirs(base_path)
 
@@ -245,10 +245,10 @@ def ordenar_regiones(regiones, tolerancia_altura=10):
 if __name__ == "__main__":
 
     number_of_images = 7
-    clear_segmented_folders(number_of_images, base_path="caracteres_segmentados")
-    base_output_path = "caracteres_segmentados"
+    clear_segmented_folders(number_of_images, base_path="Resources/Segmentación")
+    base_output_path = "Resources/Segmentación/Output"
 
-    image_paths = [f"Resources/Segmentación/IMG {i}.jpg" for i in range(1, 8)]
+    image_paths = [f"Resources/Segmentación/IMG {i}.jpeg" for i in range(1, 8)]
 
     for i, path in enumerate(image_paths, start=1):
         largest_contour, edges = encontrar_lineas_nueva(path)

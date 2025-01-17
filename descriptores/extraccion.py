@@ -1,6 +1,6 @@
 import itertools
 from datetime import datetime
-
+import sys
 from tqdm import tqdm
 import fnmatch
 import os
@@ -11,7 +11,7 @@ from Herramientas.General import tqdm_condicional
 
 
 def obtener_imagenes(path_recursos):
-    path_raiz = os.getcwd()
+    path_raiz = sys.path[1]
     path_dataset = os.path.join(path_raiz, path_recursos)
     print(f'[Extracción] Obteniendo imágenes del directorio {path_raiz}')
     imagenes = [
@@ -91,6 +91,31 @@ def extraccion(images, opciones, fichero_destino,debug_level=0, **kwargs):
         if debug_level>0:print('[Extracción] Escribiendo archivo ARFF')
         with open(fichero_destino, 'w+') as f:
             arff.dump(arff_data, f)
+
+def extraccion_ocr(images, opciones, fichero_destino, debug_level=0, **kwargs):
+    # Devuelve ARFF
+    # Caso 1: Histogramas
+    if opciones == "histogramas":
+        histoptions = kwargs["histoptions"]
+
+        # Añadir barra de progreso
+        props = [
+            hist.extraer_histogramas(images[e][0], histoptions[0], histoptions[1], histoptions[2])
+            for e in tqdm_condicional(range(len(images)), desc="[Extracción] Extrayendo histogramas", debug_level=debug_level)
+        ]
+
+        arff_data = {
+            "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props[0]))],
+            "data": [props[e] for e in tqdm_condicional(range(len(images)), desc='[Extracción] Generando archivo ARFF', debug_level=debug_level)],
+            "description": "Descriptores HOG de una imagen",
+            "relation": "hog_features",
+        }
+
+        if debug_level > 0:
+            print('[Extracción] Escribiendo archivo ARFF')
+        with open(fichero_destino, 'w+') as f:
+            arff.dump(arff_data, f)
+
 
 
 
