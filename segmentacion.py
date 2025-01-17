@@ -124,47 +124,6 @@ def encontrar_lineas_nueva(image_path):
 
     return largest_contour, edges
 
-#Devuelve los puntos del contorno como líneas
-def dibujar_lineas_contorno(contorno):
-
-    epsilon = 0.03 * cv2.arcLength(contorno, True)
-    approx = cv2.approxPolyDP(contorno, epsilon, True)
-
-    return approx.reshape(-1, 2)
-
-#Transforma la imagen para que las líneas detectadas estén en el marco de la imagen.
-def transformar_imagen(img_original, puntos):
-
-    puntos = sorted(puntos, key=lambda x: (x[1], x[0]))
-    top_points = sorted(puntos[:2], key=lambda x: x[0])
-    bottom_points = sorted(puntos[2:], key=lambda x: x[0])
-    ordered_points = np.array([top_points[0], top_points[1], bottom_points[1], bottom_points[0]], dtype="float32")
-
-    width_a = np.linalg.norm(ordered_points[2] - ordered_points[3])
-    width_b = np.linalg.norm(ordered_points[1] - ordered_points[0])
-    max_width = int(max(width_a, width_b))
-
-    height_a = np.linalg.norm(ordered_points[1] - ordered_points[2])
-    height_b = np.linalg.norm(ordered_points[0] - ordered_points[3])
-    max_height = int(max(height_a, height_b))
-
-    # Añadir margen
-    margin_x = int(0.01 * max_width)
-    margin_y = int(0.01 * max_height)
-    max_width += 2 * margin_x
-    max_height += 2 * margin_y
-
-    destino = np.array([
-        [margin_x, margin_y],
-        [max_width - margin_x, margin_y],
-        [max_width - margin_x, max_height - margin_y],
-        [margin_x, max_height - margin_y]
-    ], dtype="float32")
-
-    M = cv2.getPerspectiveTransform(ordered_points, destino)
-    img_transformada = cv2.warpPerspective(img_original, M, (max_width, max_height))
-
-    return img_transformada
 
 #Detecta contornos, segmenta y guarda cada contorno en una imagen.
 def guardar_contornos_segmentados(img_transformada, folder_path):
