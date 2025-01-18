@@ -1,7 +1,5 @@
 import sys
-
 from weka.core import jvm
-
 import entrenamiento.main
 from Herramientas import General
 from descriptores import formas
