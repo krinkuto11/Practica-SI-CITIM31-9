@@ -1,7 +1,5 @@
 import sys
-
 from weka.core import jvm
-
 from segmentacion import ejecucion_externa
 from Herramientas import General
 from Herramientas.General import eliminar_archivos_no_usados, procesar_imagen, traducir_predicciones
