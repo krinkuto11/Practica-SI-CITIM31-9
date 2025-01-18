@@ -1,18 +1,16 @@
 import sys
 from weka.core import jvm
 from segmentacion import ejecucion_externa
-from Herramientas import General
-from Herramientas.General import eliminar_archivos_no_usados, procesar_imagen, traducir_predicciones
+from Herramientas.General import eliminar_archivos_no_usados, procesar_imagen, traducir_predicciones, eliminar_archivos
 from descriptores import extraccion, formas
 from entrenamiento import main
-import os
 from entrenamiento import *
 from entrenamiento.ocr import predecir
 
 # Limpiar directorios
 
-General.eliminar_archivos(sys.path[1] + "/Resources/Datasets")
-General.eliminar_archivos(sys.path[1] + "/Resources/Modelos")
+eliminar_archivos(sys.path[1] + "/Resources/Datasets")
+eliminar_archivos(sys.path[1] + "/Resources/Modelos")
 
 ###########Parámetros para el entrenamiento###########
 
