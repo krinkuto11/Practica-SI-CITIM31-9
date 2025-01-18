@@ -93,6 +93,7 @@ def extraccion(images, opciones, fichero_destino,debug_level=0, **kwargs):
             arff.dump(arff_data, f)
 
 def extraccion_ocr(images, opciones, fichero_destino, debug_level=0, **kwargs):
+    label_range = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35']
     # Devuelve ARFF
     # Caso 1: Histogramas
     if opciones == "histogramas":
@@ -100,13 +101,13 @@ def extraccion_ocr(images, opciones, fichero_destino, debug_level=0, **kwargs):
 
         # Añadir barra de progreso
         props = [
-            hist.extraer_histogramas(images[e][0], histoptions[0], histoptions[1], histoptions[2])
+            hist.extraer_histogramas(images[e], histoptions[0], histoptions[1], histoptions[2])
             for e in tqdm_condicional(range(len(images)), desc="[Extracción] Extrayendo histogramas", debug_level=debug_level)
         ]
 
         arff_data = {
-            "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props[0]))],
-            "data": [props[e] for e in tqdm_condicional(range(len(images)), desc='[Extracción] Generando archivo ARFF', debug_level=debug_level)],
+            "attributes": [(f"feature{i + 1}", "REAL") for i in range(len(props[0]))]+[("label", label_range)],
+            "data": [props[e] + ["?"] for e in tqdm_condicional(range(len(images)), desc='[Extracción] Generando archivo ARFF', debug_level=debug_level)],
             "description": "Descriptores HOG de una imagen",
             "relation": "hog_features",
         }

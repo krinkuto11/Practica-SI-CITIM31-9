@@ -55,8 +55,7 @@ def obtener_modelo(opciones,classifiers,path_recursos,raiz_proyecto):
 
 
     ########## Sección de entrenamiento ##########
-    ##Iniciar la máquina virtual de WEKA
-    jvm.start(packages=True,max_heap_size="8G")
+
     ##Extraer imágenes y sus etiquetas de la carpeta especificada
     images = ext.obtener_imagenes(raiz_proyecto+path_recursos)
     ##Especificar opciones para la generación del dataset
@@ -94,8 +93,6 @@ def obtener_modelo(opciones,classifiers,path_recursos,raiz_proyecto):
     print(tabla_ordenada)
     print(f"El modelo más apto para el uso del OCR es: {tabla_ordenada.loc[0,'Modelo producido']}")
 
-    ##Paramos la máquina virtual de WEKA
-    jvm.stop()
 
     return resultado
 

@@ -1,40 +1,50 @@
 import weka.core.jvm as jvm
-from weka.core.converters import Loader
 from weka.classifiers import Classifier
-
+from weka.core.converters import Loader
+import math  # Para detectar NaN
 
 def predecir(modelo_path, arff_path):
-    """
-    Carga un modelo WEKA entrenado y predice la clase de la primera instancia en un archivo ARFF.
 
-    :param modelo_path: Ruta al archivo del modelo (.model)
-    :param arff_path: Ruta al archivo ARFF con los datos a predecir
-    :return: Predicción de la primera instancia en el archivo ARFF
-    """
     # Iniciar JVM de WEKA
-    jvm.start()
 
     try:
         # Cargar el modelo entrenado
-        classifier = Classifier.deserialize(modelo_path)
+        deserialized = Classifier.deserialize(modelo_path)
+
+        # Verificar si es una tupla y extraer el primer elemento
+        classifier = deserialized[0] if isinstance(deserialized, tuple) else deserialized
+
 
         # Cargar los datos ARFF
-        loader = Loader("weka.core.converters.ArffLoader")
+        loader = Loader(classname="weka.core.converters.ArffLoader")
         data = loader.load_file(arff_path)
         data.class_is_last()  # Asegurar que la última columna sea la clase
 
-        # Predecir la primera instancia
-        prediction = classifier.classify_instance()
+        # Verificar que el archivo ARFF tenga instancias
+        if data.num_instances == 0:
+            raise ValueError("El archivo ARFF no contiene instancias para predecir.")
 
-        # Obtener el nombre de la clase predicha
-        class_value = data.class_attribute.value(int(prediction))
+        # Lista para almacenar predicciones
+        predicciones = []
 
-        return class_value
+        # Iterar sobre todas las instancias
+        for i, instance in enumerate(data):
+            prediction = classifier.classify_instance(instance)  # Predicción numérica
+
+            # Manejar posibles NaN en la predicción
+            if math.isnan(prediction):
+                class_value = "ERROR: NaN en predicción"
+            else:
+                class_value = data.class_attribute.value(int(prediction))  # Convertir índice a nombre de clase
+
+            predicciones.append(class_value)
+            print(f"Instancia {i}: Predicción = {class_value}")
+
+        return predicciones
 
     finally:
-        # Detener la JVM al finalizar
-        jvm.stop()
+      print("OCR Completo")
 
 # Ejemplo de uso:
-# resultado = predecir("modelo.model", "imagen.arff")
-# print(f"Predicción: {resultado}")
+# resultado = predecir("modelo.model", "imagenes.arff")
+# print("Todas las predicciones:", resultado)

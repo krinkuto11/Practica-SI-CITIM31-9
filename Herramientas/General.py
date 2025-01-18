@@ -3,6 +3,34 @@ from matplotlib import pyplot as plt
 from tqdm import tqdm
 import os
 import glob
+import math
+
+def traducir_predicciones(predicciones):
+    """
+    Traduce una lista de predicciones en formato string ('0'-'35') a caracteres ('0'-'9' y 'a'-'z' sin 'ñ').
+
+    :param predicciones: Lista de predicciones en formato string o errores ("ERROR: NaN en predicción")
+    :return: Lista con las predicciones traducidas a caracteres
+    """
+    # Crear un diccionario de mapeo: 0-9 → '0'-'9', 10-35 → 'a'-'z' (sin ñ)
+    num_to_char = {str(i): chr(i + 48) if i < 10 else chr(i + 87) for i in range(36)}
+
+    # Lista para almacenar los caracteres traducidos
+    traducciones = []
+
+    for pred in predicciones:
+        if pred == "ERROR: NaN en predicción":
+            traducciones.append("ERROR")  # Manejar NaN o errores
+        elif pred in num_to_char:
+            traducciones.append(num_to_char[pred])  # Convertir número en string a caracter
+        else:
+            traducciones.append("ERROR")  # Cualquier otro caso inesperado
+
+    return traducciones
+
+
+
+
 
 def eliminar_archivos_no_usados(carpeta_datasets, carpeta_modelos, resultado):
     # Extraer los archivos que deben conservarse
@@ -14,14 +42,12 @@ def eliminar_archivos_no_usados(carpeta_datasets, carpeta_modelos, resultado):
         ruta_completa = os.path.abspath(os.path.join(carpeta_datasets, archivo))
         if archivo.endswith(".arff") and ruta_completa != arff_permitido:
             os.remove(ruta_completa)
-            print(f"Eliminado: {ruta_completa}")
 
     # Eliminar archivos .model no permitidos
     for archivo in os.listdir(carpeta_modelos):
         ruta_completa = os.path.abspath(os.path.join(carpeta_modelos, archivo))
         if archivo.endswith(".model") and ruta_completa != modelo_permitido:
             os.remove(ruta_completa)
-            print(f"Eliminado: {ruta_completa}")
 
 def eliminar_archivos(ruta_carpeta):
     archivos = glob.glob(os.path.join(ruta_carpeta, "*"))
