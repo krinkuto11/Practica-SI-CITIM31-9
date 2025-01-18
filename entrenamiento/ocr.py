@@ -1,11 +1,9 @@
-import weka.core.jvm as jvm
 from weka.classifiers import Classifier
 from weka.core.converters import Loader
 import math  # Para detectar NaN
 
 def predecir(modelo_path, arff_path):
 
-    # Iniciar JVM de WEKA
 
     try:
         # Cargar el modelo entrenado
@@ -45,6 +43,4 @@ def predecir(modelo_path, arff_path):
     finally:
       print("OCR Completo")
 
-# Ejemplo de uso:
-# resultado = predecir("modelo.model", "imagenes.arff")
-# print("Todas las predicciones:", resultado)
+
