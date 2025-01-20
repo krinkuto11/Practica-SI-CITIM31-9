@@ -33,7 +33,7 @@ def predecir(modelo_path, arff_path):
             if math.isnan(prediction):
                 class_value = "ERROR: NaN en predicción"
             else:
-                class_value = data.class_attribute.value(int(prediction))  # Convertir índice a nombre de clase
+                class_value = data.class_attribute.value(int(prediction))
 
             predicciones.append(class_value)
             print(f"Instancia {i}: Predicción = {class_value}")

@@ -6,11 +6,12 @@ from descriptores import extraccion, formas
 from entrenamiento import main
 from entrenamiento import *
 from entrenamiento.ocr import predecir
+from definitions import ROOT_DIR
 
 # Limpiar directorios
 
-eliminar_archivos(sys.path[1] + "/Resources/Datasets")
-eliminar_archivos(sys.path[1] + "/Resources/Modelos")
+eliminar_archivos(ROOT_DIR + "/Resources/Datasets")
+eliminar_archivos(ROOT_DIR + "/Resources/Modelos")
 
 ###########Parámetros para el entrenamiento###########
 
@@ -34,7 +35,7 @@ classifiers = [
     "weka.classifiers.bayes.NaiveBayes"
 ]
 
-raiz_proyecto = sys.path[1]
+raiz_proyecto = ROOT_DIR
 dataset = "/Resources/DatosRaw/ccnds2"
 ###########Parámetros para el entrenamiento###########
 
@@ -51,7 +52,7 @@ eliminar_archivos_no_usados(raiz_proyecto+"/Resources/Datasets",raiz_proyecto+"/
 #####################################################
 
 path_modelo = resultado_entrenamiento[4]
-path_arff = sys.path[1]+"/Resources/Temp/ocr.arff"
+path_arff = ROOT_DIR+"/Resources/Temp/ocr.arff"
 
 
 ############## 2.Segmentación de las tarjetas #############
@@ -63,7 +64,7 @@ input("Introduce cualquier carácter y pulsa enter para continuar al reconocimie
 print("Iniciando OCR de las tarjetas...")
 #Tarjeta 1
 print("Tarjeta 1")
-images = [sys.path[1]+"/Resources/Segmentación/Output/IMG 1/char_{}.png".format(i) for i in range(1,49)]
+images = [ROOT_DIR+"/Resources/Segmentación/Output/IMG 1/char_{}.png".format(i) for i in range(1,49)]
 img_cv = [procesar_imagen(image) for image in images]
 extraccion.extraccion_ocr(img_cv,resultado_entrenamiento[0],path_arff,histoptions=resultado_entrenamiento[1])
 prediccion_nums = predecir(path_modelo, path_arff)
@@ -72,7 +73,7 @@ print(traducir_predicciones(prediccion_nums))
 
 #Tarjeta 2
 print("Tarjeta 2")
-images = [sys.path[1]+"/Resources/Segmentación/Output/IMG 2/char_{}.png".format(i) for i in range(1,44)]
+images = [ROOT_DIR+"/Resources/Segmentación/Output/IMG 2/char_{}.png".format(i) for i in range(1,44)]
 img_cv = [procesar_imagen(image) for image in images]
 extraccion.extraccion_ocr(img_cv,resultado_entrenamiento[0],path_arff,histoptions=resultado_entrenamiento[1])
 prediccion_nums = predecir(path_modelo, path_arff)
@@ -81,7 +82,7 @@ print(traducir_predicciones(prediccion_nums))
 
 #Tarjeta 3
 print("Tarjeta 3")
-images = [sys.path[1]+"/Resources/Segmentación/Output/IMG 3/char_{}.png".format(i) for i in range(1,57)]
+images = [ROOT_DIR+"/Resources/Segmentación/Output/IMG 3/char_{}.png".format(i) for i in range(1,57)]
 img_cv = [procesar_imagen(image) for image in images]
 extraccion.extraccion_ocr(img_cv,resultado_entrenamiento[0],path_arff,histoptions=resultado_entrenamiento[1])
 prediccion_nums = predecir(path_modelo, path_arff)
@@ -91,7 +92,7 @@ print(traducir_predicciones(prediccion_nums))
 
 #Tarjeta 4
 print("Tarjeta 4")
-images = [sys.path[1]+"/Resources/Segmentación/Output/IMG 4/char_{}.png".format(i) for i in range(1,38)]
+images = [ROOT_DIR+"/Resources/Segmentación/Output/IMG 4/char_{}.png".format(i) for i in range(1,38)]
 img_cv = [procesar_imagen(image) for image in images]
 extraccion.extraccion_ocr(img_cv,resultado_entrenamiento[0],path_arff,histoptions=resultado_entrenamiento[1])
 prediccion_nums = predecir(path_modelo, path_arff)
@@ -101,7 +102,7 @@ print(traducir_predicciones(prediccion_nums))
 
 #Tarjeta 5
 print("Tarjeta 5")
-images = [sys.path[1]+"/Resources/Segmentación/Output/IMG 5/char_{}.png".format(i) for i in range(1,6)]
+images = [ROOT_DIR+"/Resources/Segmentación/Output/IMG 5/char_{}.png".format(i) for i in range(1,6)]
 img_cv = [procesar_imagen(image) for image in images]
 extraccion.extraccion_ocr(img_cv,resultado_entrenamiento[0],path_arff,histoptions=resultado_entrenamiento[1])
 prediccion_nums = predecir(path_modelo, path_arff)
@@ -110,7 +111,7 @@ print(traducir_predicciones(prediccion_nums))
 
 #Tarjeta 6
 print("Tarjeta 6")
-images = [sys.path[1]+"/Resources/Segmentación/Output/IMG 6/char_{}.png".format(i) for i in range(1,39)]
+images = [ROOT_DIR+"/Resources/Segmentación/Output/IMG 6/char_{}.png".format(i) for i in range(1,39)]
 img_cv = [procesar_imagen(image) for image in images]
 extraccion.extraccion_ocr(img_cv,resultado_entrenamiento[0],path_arff,histoptions=resultado_entrenamiento[1])
 prediccion_nums = predecir(path_modelo, path_arff)
@@ -119,7 +120,7 @@ print(traducir_predicciones(prediccion_nums))
 
 #Tarjeta 7
 print("Tarjeta 7")
-images = [sys.path[1]+"/Resources/Segmentación/Output/IMG 7/char_{}.png".format(i) for i in range(1,33)]
+images = [ROOT_DIR+"/Resources/Segmentación/Output/IMG 7/char_{}.png".format(i) for i in range(1,33)]
 img_cv = [procesar_imagen(image) for image in images]
 extraccion.extraccion_ocr(img_cv,resultado_entrenamiento[0],path_arff,histoptions=resultado_entrenamiento[1])
 prediccion_nums = predecir(path_modelo, path_arff)

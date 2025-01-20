@@ -3,13 +3,8 @@ from weka.core.classes import serialization_write, Random
 from weka.core.converters import Loader
 from weka.filters import Filter
 from tqdm import tqdm
-import sys
-from Herramientas.General import eliminar_archivos_no_usados
-from descriptores import formas
-from weka.core import jvm
 from descriptores import extraccion as ext
 import pandas as pd
-from Herramientas import General
 
 def training(dataset, fichsalida,clasificador="weka.classifiers.trees.RandomForest",debug_level=0):
     resultados = [clasificador.split('.')[-1],dataset, fichsalida]

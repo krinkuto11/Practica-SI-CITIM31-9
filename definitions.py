@@ -1,0 +1,1 @@
+ROOT_DIR = "/Users/anderregidor/PycharmProjects/Practica-SI-CITIM31-9"

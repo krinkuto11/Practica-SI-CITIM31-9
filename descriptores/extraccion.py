@@ -8,12 +8,12 @@ import arff
 import cv2
 import descriptores.histogramasgo as hist
 from Herramientas.General import tqdm_condicional
+from definitions import ROOT_DIR
 
 
 def obtener_imagenes(path_recursos):
-    path_raiz = sys.path[1]
-    path_dataset = os.path.join(path_raiz, path_recursos)
-    print(f'[Extracción] Obteniendo imágenes del directorio {path_raiz}')
+    path_dataset = path_recursos
+    print(f'[Extracción] Obteniendo imágenes del directorio {path_recursos}')
     imagenes = [
         (cv2.adaptiveThreshold(cv2.imread(os.path.join(path_dataset, str(numero), archivo),cv2.IMREAD_GRAYSCALE), 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
                                    cv2.THRESH_BINARY_INV, 11, 2), numero)
