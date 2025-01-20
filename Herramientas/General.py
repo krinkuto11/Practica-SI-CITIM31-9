@@ -27,7 +27,7 @@ def traducir_predicciones(predicciones):
 
 def eliminar_archivos_no_usados(carpeta_datasets, carpeta_modelos, resultado):
     # Extraer los archivos que deben conservarse
-    arff_permitido = resultado[2]
+    arff_permitido = ROOT_DIR+resultado[2]
     modelo_permitido = resultado[4]
 
     # Eliminar archivos .arff no permitidos
