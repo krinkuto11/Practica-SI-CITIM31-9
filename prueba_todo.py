@@ -1,7 +1,8 @@
 import sys
 from weka.core import jvm
 from segmentacion import ejecucion_externa
-from Herramientas.General import eliminar_archivos_no_usados, procesar_imagen, traducir_predicciones, eliminar_archivos
+from Herramientas.General import eliminar_archivos_no_usados, procesar_imagen, traducir_predicciones, eliminar_archivos, \
+    contar_carpetas, obtener_pngs
 from descriptores import extraccion, formas
 from entrenamiento import main
 from entrenamiento import *
@@ -64,68 +65,97 @@ input("Introduce cualquier carácter y pulsa enter para continuar al reconocimie
 print("Iniciando OCR de las tarjetas...")
 #Tarjeta 1
 print("Tarjeta 1")
-images = [ROOT_DIR+"/Resources/Segmentación/Output/IMG 1/char_{}.png".format(i) for i in range(1,49)]
-img_cv = [procesar_imagen(image) for image in images]
-extraccion.extraccion_ocr(img_cv,resultado_entrenamiento[0],path_arff,histoptions=resultado_entrenamiento[1])
-prediccion_nums = predecir(path_modelo, path_arff)
-print(prediccion_nums)
-print(traducir_predicciones(prediccion_nums))
+
+for reg in range(0,contar_carpetas(ROOT_DIR+"/Resources/Segmentación/Output/IMG 1")):
+    if len(obtener_pngs(ROOT_DIR+f"/Resources/Segmentación/Output/IMG 1/{reg}"))>0:
+        print(f"Región {reg}")
+        images = [ROOT_DIR + f"/Resources/Segmentación/Output/IMG 1/{reg}/{imagen}" for imagen in obtener_pngs(ROOT_DIR+f"/Resources/Segmentación/Output/IMG 1/{reg}")]
+        img_cv = [procesar_imagen(image) for image in images]
+        extraccion.extraccion_ocr(img_cv, resultado_entrenamiento[0], path_arff, histoptions=resultado_entrenamiento[1])
+        prediccion_nums = predecir(path_modelo, path_arff)
+        print(prediccion_nums)
+        print(traducir_predicciones(prediccion_nums))
+
 
 #Tarjeta 2
 print("Tarjeta 2")
-images = [ROOT_DIR+"/Resources/Segmentación/Output/IMG 2/char_{}.png".format(i) for i in range(1,44)]
-img_cv = [procesar_imagen(image) for image in images]
-extraccion.extraccion_ocr(img_cv,resultado_entrenamiento[0],path_arff,histoptions=resultado_entrenamiento[1])
-prediccion_nums = predecir(path_modelo, path_arff)
-print(prediccion_nums)
-print(traducir_predicciones(prediccion_nums))
+
+for reg in range(0,contar_carpetas(ROOT_DIR+"/Resources/Segmentación/Output/IMG 2")):
+    if len(obtener_pngs(ROOT_DIR + f"/Resources/Segmentación/Output/IMG 2/{reg}")) > 0:
+        print(f"Región {reg}")
+        images = [ROOT_DIR + f"/Resources/Segmentación/Output/IMG 2/{reg}/{imagen}" for imagen in obtener_pngs(ROOT_DIR+f"/Resources/Segmentación/Output/IMG 2/{reg}")]
+        img_cv = [procesar_imagen(image) for image in images]
+        extraccion.extraccion_ocr(img_cv, resultado_entrenamiento[0], path_arff, histoptions=resultado_entrenamiento[1])
+        prediccion_nums = predecir(path_modelo, path_arff)
+        print(prediccion_nums)
+        print(traducir_predicciones(prediccion_nums))
+
 
 #Tarjeta 3
 print("Tarjeta 3")
-images = [ROOT_DIR+"/Resources/Segmentación/Output/IMG 3/char_{}.png".format(i) for i in range(1,57)]
-img_cv = [procesar_imagen(image) for image in images]
-extraccion.extraccion_ocr(img_cv,resultado_entrenamiento[0],path_arff,histoptions=resultado_entrenamiento[1])
-prediccion_nums = predecir(path_modelo, path_arff)
-print(prediccion_nums)
-print(traducir_predicciones(prediccion_nums))
+
+for reg in range(0,contar_carpetas(ROOT_DIR+"/Resources/Segmentación/Output/IMG 3")):
+    if len(obtener_pngs(ROOT_DIR + f"/Resources/Segmentación/Output/IMG 3/{reg}")) > 0:
+        print(f"Región {reg}")
+        images = [ROOT_DIR + f"/Resources/Segmentación/Output/IMG 3/{reg}/{imagen}" for imagen in obtener_pngs(ROOT_DIR+f"/Resources/Segmentación/Output/IMG 3/{reg}")]
+        img_cv = [procesar_imagen(image) for image in images]
+        extraccion.extraccion_ocr(img_cv, resultado_entrenamiento[0], path_arff, histoptions=resultado_entrenamiento[1])
+        prediccion_nums = predecir(path_modelo, path_arff)
+        print(prediccion_nums)
+        print(traducir_predicciones(prediccion_nums))
+
 
 
 #Tarjeta 4
 print("Tarjeta 4")
-images = [ROOT_DIR+"/Resources/Segmentación/Output/IMG 4/char_{}.png".format(i) for i in range(1,38)]
-img_cv = [procesar_imagen(image) for image in images]
-extraccion.extraccion_ocr(img_cv,resultado_entrenamiento[0],path_arff,histoptions=resultado_entrenamiento[1])
-prediccion_nums = predecir(path_modelo, path_arff)
-print(prediccion_nums)
-print(traducir_predicciones(prediccion_nums))
+
+for reg in range(0,contar_carpetas(ROOT_DIR+"/Resources/Segmentación/Output/IMG 4")):
+    if len(obtener_pngs(ROOT_DIR+f"/Resources/Segmentación/Output/IMG 4/{reg}"))>0:
+        print(f"Región {reg}")
+        images = [ROOT_DIR + f"/Resources/Segmentación/Output/IMG 4/{reg}/{imagen}" for imagen in obtener_pngs(ROOT_DIR+f"/Resources/Segmentación/Output/IMG 4/{reg}")]
+        img_cv = [procesar_imagen(image) for image in images]
+        extraccion.extraccion_ocr(img_cv, resultado_entrenamiento[0], path_arff, histoptions=resultado_entrenamiento[1])
+        prediccion_nums = predecir(path_modelo, path_arff)
+        print(prediccion_nums)
+        print(traducir_predicciones(prediccion_nums))
+
 
 
 #Tarjeta 5
 print("Tarjeta 5")
-images = [ROOT_DIR+"/Resources/Segmentación/Output/IMG 5/char_{}.png".format(i) for i in range(1,6)]
-img_cv = [procesar_imagen(image) for image in images]
-extraccion.extraccion_ocr(img_cv,resultado_entrenamiento[0],path_arff,histoptions=resultado_entrenamiento[1])
-prediccion_nums = predecir(path_modelo, path_arff)
-print(prediccion_nums)
-print(traducir_predicciones(prediccion_nums))
+for reg in range(0,contar_carpetas(ROOT_DIR+"/Resources/Segmentación/Output/IMG 5")):
+    if len(obtener_pngs(ROOT_DIR+f"/Resources/Segmentación/Output/IMG 5/{reg}"))>0:
+        print(f"Región {reg}")
+        images = [ROOT_DIR + f"/Resources/Segmentación/Output/IMG 5/{reg}/{imagen}" for imagen in obtener_pngs(ROOT_DIR+f"/Resources/Segmentación/Output/IMG 5/{reg}")]
+        img_cv = [procesar_imagen(image) for image in images]
+        extraccion.extraccion_ocr(img_cv, resultado_entrenamiento[0], path_arff, histoptions=resultado_entrenamiento[1])
+        prediccion_nums = predecir(path_modelo, path_arff)
+        print(prediccion_nums)
+        print(traducir_predicciones(prediccion_nums))
 
 #Tarjeta 6
 print("Tarjeta 6")
-images = [ROOT_DIR+"/Resources/Segmentación/Output/IMG 6/char_{}.png".format(i) for i in range(1,39)]
-img_cv = [procesar_imagen(image) for image in images]
-extraccion.extraccion_ocr(img_cv,resultado_entrenamiento[0],path_arff,histoptions=resultado_entrenamiento[1])
-prediccion_nums = predecir(path_modelo, path_arff)
-print(prediccion_nums)
-print(traducir_predicciones(prediccion_nums))
+for reg in range(0,contar_carpetas(ROOT_DIR+"/Resources/Segmentación/Output/IMG 6")):
+    if len(obtener_pngs(ROOT_DIR + f"/Resources/Segmentación/Output/IMG 6/{reg}")) > 0:
+        print(f"Región {reg}")
+        images = [ROOT_DIR + f"/Resources/Segmentación/Output/IMG 6/{reg}/{imagen}" for imagen in obtener_pngs(ROOT_DIR+f"/Resources/Segmentación/Output/IMG 6/{reg}")]
+        img_cv = [procesar_imagen(image) for image in images]
+        extraccion.extraccion_ocr(img_cv, resultado_entrenamiento[0], path_arff, histoptions=resultado_entrenamiento[1])
+        prediccion_nums = predecir(path_modelo, path_arff)
+        print(prediccion_nums)
+        print(traducir_predicciones(prediccion_nums))
 
 #Tarjeta 7
 print("Tarjeta 7")
-images = [ROOT_DIR+"/Resources/Segmentación/Output/IMG 7/char_{}.png".format(i) for i in range(1,33)]
-img_cv = [procesar_imagen(image) for image in images]
-extraccion.extraccion_ocr(img_cv,resultado_entrenamiento[0],path_arff,histoptions=resultado_entrenamiento[1])
-prediccion_nums = predecir(path_modelo, path_arff)
-print(prediccion_nums)
-print(traducir_predicciones(prediccion_nums))
+for reg in range(0,contar_carpetas(ROOT_DIR+"/Resources/Segmentación/Output/IMG 7")):
+    if len(obtener_pngs(ROOT_DIR+f"/Resources/Segmentación/Output/IMG 7/{reg}"))>0:
+        print(f"Región {reg}")
+        images = [ROOT_DIR + f"/Resources/Segmentación/Output/IMG 7/{reg}/{imagen}" for imagen in obtener_pngs(ROOT_DIR+f"/Resources/Segmentación/Output/IMG 7/{reg}")]
+        img_cv = [procesar_imagen(image) for image in images]
+        extraccion.extraccion_ocr(img_cv, resultado_entrenamiento[0], path_arff, histoptions=resultado_entrenamiento[1])
+        prediccion_nums = predecir(path_modelo, path_arff)
+        print(prediccion_nums)
+        print(traducir_predicciones(prediccion_nums))
 
 ########## Apagar JVM
 jvm.stop()

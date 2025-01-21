@@ -245,8 +245,8 @@ def ordenar_regiones(regiones, tolerancia_altura=10):
 if __name__ == "__main__":
 
     number_of_images = 7
-    clear_segmented_folders(number_of_images, base_path="Resources/Segmentación")
-    base_output_path = "Resources/Segmentación/Output"
+    clear_segmented_folders(number_of_images, base_path="Resources/Segmentación/Output")
+    base_output_path = "Resources/Segmentación/Output/"
 
     image_paths = [f"Resources/Segmentación/IMG {i}.jpeg" for i in range(1, 8)]
 
@@ -492,15 +492,16 @@ if __name__ == "__main__":
 
         # Configurar carpeta de salida para la imagen actual
         output_folder = os.path.join(base_output_path, f"IMG {i}")
+        print(output_folder)
         os.makedirs(output_folder, exist_ok=True)
         char_count = 1  # Contador para los nombres de archivos de caracteres
-
+        region_count = 0
         # Recorrer cada región ordenada y guardar caracteres en orden
         for idx_reg, (start_r, end_r, sub_start, sub_end) in enumerate(regiones_ordenadas):
             # Crear máscara para la región actual
             region_mask = np.zeros_like(binaria_invertida, dtype=np.uint8)
             cv2.rectangle(region_mask, (sub_start, start_r), (sub_end, end_r), 255, thickness=-1)
-
+            os.makedirs(output_folder+f"/{region_count}", exist_ok=True)
             componentes_en_region = []
 
             # Verificar intersección para cada componente con la región actual
@@ -541,17 +542,19 @@ if __name__ == "__main__":
                 char_img = img_transformada[y_m:y2, x_m:x2]
 
                 # Guardar el carácter en la carpeta correspondiente
-                char_path = os.path.join(output_folder, f"char_{char_count}.png")
+                char_path = output_folder+ f"/{region_count}/char_{char_count}.png"
+                print(char_path)
                 cv2.imwrite(char_path, char_img)
                 char_count += 1
+            region_count += 1
 
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
 def ejecucion_externa():
     number_of_images = 7
-    clear_segmented_folders(number_of_images, base_path="Resources/Segmentación")
-    base_output_path = "Resources/Segmentación/Output"
+    clear_segmented_folders(number_of_images, base_path="Resources/Segmentación/Output")
+    base_output_path = "Resources/Segmentación/Output/"
 
     image_paths = [f"Resources/Segmentación/IMG {i}.jpeg" for i in range(1, 8)]
 
@@ -631,7 +634,7 @@ def ejecucion_externa():
 
         h, w = binaria_invertida.shape[:2]
 
-        umbral_altura_minima = h*0.04  # Ajusta este valor según las dimensiones de los caracteres esperados
+        umbral_altura_minima = h * 0.04  # Ajusta este valor según las dimensiones de los caracteres esperados
 
         # Filtrar líneas basadas en su altura
         lineas_filtradas = [(start_r, end_r) for (start_r, end_r) in lineas if (end_r - start_r) > umbral_altura_minima]
@@ -777,7 +780,6 @@ def ejecucion_externa():
         # Mostrar las regiones detectadas
         cv2.imshow("Regiones anteriores (azul) y caracteres (verde)", img_resultado)
 
-
         # Ordenar las regiones finales
         regiones_ordenadas = ordenar_regiones(regiones_finales)
         img_visualizacion = cv2.cvtColor(binaria_invertida, cv2.COLOR_GRAY2BGR)
@@ -799,13 +801,13 @@ def ejecucion_externa():
         output_folder = os.path.join(base_output_path, f"IMG {i}")
         os.makedirs(output_folder, exist_ok=True)
         char_count = 1  # Contador para los nombres de archivos de caracteres
-
+        region_count = 0
         # Recorrer cada región ordenada y guardar caracteres en orden
         for idx_reg, (start_r, end_r, sub_start, sub_end) in enumerate(regiones_ordenadas):
             # Crear máscara para la región actual
             region_mask = np.zeros_like(binaria_invertida, dtype=np.uint8)
             cv2.rectangle(region_mask, (sub_start, start_r), (sub_end, end_r), 255, thickness=-1)
-
+            os.makedirs(output_folder + f"/{region_count}", exist_ok=True)
             componentes_en_region = []
 
             # Verificar intersección para cada componente con la región actual
@@ -846,9 +848,10 @@ def ejecucion_externa():
                 char_img = img_transformada[y_m:y2, x_m:x2]
 
                 # Guardar el carácter en la carpeta correspondiente
-                char_path = os.path.join(output_folder, f"char_{char_count}.png")
+                char_path = output_folder + f"/{region_count}/char_{char_count}.png"
                 cv2.imwrite(char_path, char_img)
                 char_count += 1
+            region_count += 1
 
         cv2.waitKey(0)
         cv2.destroyAllWindows()

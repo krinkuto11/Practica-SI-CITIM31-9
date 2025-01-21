@@ -22,7 +22,11 @@ def traducir_predicciones(predicciones):
     return traducciones
 
 
+def contar_carpetas(ruta):
+    return sum(os.path.isdir(os.path.join(ruta, nombre)) for nombre in os.listdir(ruta))
 
+def obtener_pngs(ruta):
+    return sorted([nombre for nombre in os.listdir(ruta) if nombre.lower().endswith('.png') and os.path.isfile(os.path.join(ruta, nombre))])
 
 
 def eliminar_archivos_no_usados(carpeta_datasets, carpeta_modelos, resultado):

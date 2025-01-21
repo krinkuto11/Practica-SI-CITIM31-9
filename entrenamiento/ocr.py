@@ -36,11 +36,11 @@ def predecir(modelo_path, arff_path):
                 class_value = data.class_attribute.value(int(prediction))
 
             predicciones.append(class_value)
-            print(f"Instancia {i}: Predicción = {class_value}")
+            #(debug)print(f"Instancia {i}: Predicción = {class_value}")
 
         return predicciones
 
     finally:
-      print("OCR Completo")
+      print("")
 
 
